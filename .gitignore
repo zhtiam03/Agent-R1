@@ -132,3 +132,7 @@ logs
 log
 outputs
 .history
+
+# Business environment source (ENV/ also matches env/ on case-insensitive Git).
+!/recipes/telecom/env/
+!/recipes/telecom/env/*.py

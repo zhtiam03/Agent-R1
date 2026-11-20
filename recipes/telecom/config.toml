@@ -1,0 +1,66 @@
+# Local-readable source of truth. YAML with the same keys is also supported.
+[model]
+model_path = "/models/Qwen3-4B"
+trust_remote_code = false
+
+[training]
+finetuning_type = "lora"
+lora_rank = 16
+lora_alpha = 32
+lora_dropout = 0.0
+target_modules = "auto"
+max_length = 4096
+batch_size = 1
+gradient_accumulation_steps = 8
+learning_rate = 0.0001
+epochs = 1.0
+gradient_checkpointing = true
+bf16 = true
+seed = 42
+output_dir = "outputs/telecom/sft"
+
+[inference]
+# Empty means use model.model_path; may point to a merged SFT/GRPO export.
+model_path = ""
+adapter_path = ""
+max_new_tokens = 512
+temperature = 0.0
+seed = 42
+
+[environment]
+max_steps = 12
+
+[reward]
+mode = "state_aware"
+task = 1.0
+failure = 1.0
+progress = 0.1
+compliance = 0.1
+tool_cost = 0.02
+invalid = 0.1
+violation = 1.0
+
+[grpo]
+# One ordinary HF model directory, not an adapter-only directory.
+# Set this to the merged SFT export before RL. Empty follows model.model_path.
+init_model_path = ""
+train_file = "outputs/telecom/data/train.parquet"
+val_file = "outputs/telecom/data/validation.parquet"
+rollout_n = 4
+train_batch_size = 8
+mini_batch_size = 4
+micro_batch_size = 1
+prompt_length = 4096
+response_length = 512
+tensor_parallel_size = 1
+gpu_memory_utilization = 0.5
+num_workers = 1
+n_gpus_per_node = 1
+nnodes = 1
+epochs = 1
+learning_rate = 0.000001
+use_kl_loss = false
+kl_loss_coef = 0.001
+save_freq = 20
+test_freq = 10
+output_dir = "outputs/telecom/grpo"

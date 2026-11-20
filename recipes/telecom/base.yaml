@@ -1,0 +1,4 @@
+- name: telecom_agent
+  _target_: recipes.telecom.telecom_agent_flow.TelecomAgentFlow
+  env_type: telecom
+  max_steps: 12

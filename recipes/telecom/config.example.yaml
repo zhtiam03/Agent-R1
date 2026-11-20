@@ -1,0 +1,11 @@
+# Runnable override: remaining sections inherit config.toml defaults.
+# YAML parsing uses the server's PyYAML; no dependency installation is needed locally.
+model:
+  model_path: /models/Qwen3-4B
+  trust_remote_code: false
+training:
+  finetuning_type: lora
+  lora_rank: 16
+  lora_alpha: 32
+  target_modules: auto
+# Switch model_path to /models/Qwen3-8B, then tune memory/batch/length settings.
